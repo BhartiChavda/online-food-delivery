@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zippy - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo"><i class="fas fa-utensils"></i>Zippy</a>
+        <div id="menu-bar" class="fas fa-bars"></div>
+        <nav class="navbar">
+            <a href="index.html">home</a>
+            <a href="speciallity.html">speciality</a>
+            <a href="popular.html">popular</a>
+            <a href="gallery.html">gallery</a>
+            <a href="review.html">review</a>
+            <a href="order.html">order</a>
+            <a href="account.html">account</a>
+                <a href="cart.html" class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cart-count">0</span>
+    </a>
+        </nav>
+    </header>
+
+    <!-- Home Section Only -->
+     
+ 
+     <!-- order section starts  -->
+
+     <section class="order" id="order">
+
+        <h1 class="heading"> <span>order</span> now </h1>
+
+        <div class="row">
+
+            <div class="image">
+                <img src="images/order-img.jpg" alt="">
+            </div>
+ 
+
+            <form action="">
+
+                <div class="inputBox">
+                    <input type="text" placeholder="name" required>
+                    <input type="email" placeholder="email" required>
+                </div>
+
+                <div class="inputBox">
+<input type="tel" placeholder="Mobile Number" pattern="[0-9]{10}"  maxlength="10" required title="Please enter a valid 10-digit mobile number">
+                    <input type="text" placeholder="food name" required>
+                </div>
+
+                <textarea placeholder="address" name="" id="" cols="30" rows="10" required></textarea>
+
+                <input type="submit" value="order now" class="btn">
+
+            </form>
+
+
+        </div>
+
+    </section>
+
+    <!-- order section ends -->
+
+    <!-- Footer -->
+    <section class="footer">
+        <div class="share">
+            <a href="#" class="btn">facebook</a>
+            <a href="#" class="btn">twitter</a>
+            <a href="#" class="btn">instagram</a>
+        </div>
+        <h1 class="credit">Created by <span>Web Guru</span> | All rights reserved</h1>
+    </section>
+
+    <a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+ 
+
+    <script src="script.js">
+</script>
+
+ </body>
+</html>
+
+

@@ -1,0 +1,106 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Zippy</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="#" class="logo"><i class="fas fa-utensils"></i>Zippy</a>
+    <div id="menu-bar" class="fas fa-bars"></div>
+    <nav class="navbar">
+      <a href="index.html">home</a>
+      <a href="speciallity.html">speciality</a>
+      <a href="popular.html">popular</a>
+      <a href="gallery.html">gallery</a>
+      <a href="review.html">review</a>
+      <a href="order.html">order</a>
+      <a href="account.html">account</a>
+          <a href="cart.html" class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cart-count">0</span>
+    </a>
+    </nav>
+  </header>
+
+  <!-- Login Form -->
+  <section class="account-container">
+    <form class="account-form">
+      <h2>Login</h2>
+
+      <div class="input-group">
+        <label for="email">Email Address</label>
+<input type="email" id="email" placeholder="Enter your email" required autocapitalize="off" autocomplete="email" />
+
+      </div>
+
+      <div class="input-group password-group">
+        <label for="password">Password</label>
+<input type="password" id="password" placeholder="Enter password" required autocapitalize="off" autocomplete="current-password" />
+        <span id="togglePassword" class="toggle-password">Show</span>
+      </div>
+
+      <div class="forgot-link">
+        <a href="forgot.html">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+      <div class="register-link">
+  Don't have an account? <a href="register.html">Register here</a>
+</div>
+
+    </form>
+  </section>
+
+  <!-- Scroll to Top Button -->
+  <a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+
+
+
+  <!-- JS -->
+  <script src="script.js"></script>
+  <script>
+    // Show/Hide Password
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    if (togglePassword && passwordInput) {
+      togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        togglePassword.textContent = type === "password" ? "Show" : "Hide";
+      });
+    }
+  document.querySelector(".account-form")?.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+
+    // Simulate login success
+    localStorage.setItem("userLoggedIn", "true");
+    localStorage.setItem("userEmail", email);
+    alert("Login successful!");
+
+    window.location.href = "index.html"; // or wherever you want to redirect
+  });
+ 
+
+  </script>
+
+</body>
+</html>
