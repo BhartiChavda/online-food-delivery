@@ -1,0 +1,158 @@
+<?php
+session_start();
+$loggedIn = isset($_SESSION['user']);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zippy Food - Cart</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <a href="index.php" class="logo"><i class="fas fa-utensils"></i>Zippy</a>
+  <div id="menu-bar" class="fas fa-bars"></div>
+  <nav class="navbar">
+    <a href="index.php">home</a>
+    <a href="speciality.php">speciality</a>
+    <a href="popular.php">popular</a>
+    <a href="gallery.php">gallery</a>
+    <a href="about.php">About Us</a>
+    <?php if ($loggedIn): ?>
+      <a href="profile.php"><i class="fas fa-user-circle" style="font-size: 22px; color: #e04f56;"></i></a>
+    <?php else: ?>
+      <a href="login.php">login</a>
+    <?php endif; ?>
+    <a href="cart.php" class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+
+<!-- Cart Section -->
+<section class="cart" style="padding-top: 8rem;">
+  <h1 class="heading"> your <span>cart</span> </h1>
+
+  <div class="cart-container">
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <!-- JS will populate this -->
+      </tbody>
+    </table>
+
+    <div class="cart-total">
+      <h2>Total: <span id="total-amount">$0.00</span></h2>
+
+      <?php if ($loggedIn): ?>
+        <a href="order.php" class="btn">Proceed to Checkout</a>
+      <?php else: ?>
+        <a href="order.php" class="btn" id="loginPromptBtn">Proceed to Checkout</a>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<?php include 'footer.php'; ?>
+
+<a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+
+<script>
+  // Load cart from localStorage
+  function getCartItems() {
+    const items = localStorage.getItem("cartItems");
+    return items ? JSON.parse(items) : [];
+  }
+
+  function setCartItems(items) {
+    localStorage.setItem("cartItems", JSON.stringify(items));
+  }
+
+  function updateCartBadge() {
+    const items = getCartItems();
+    const count = items.reduce((sum, item) => sum + item.qty, 0);
+    const badge = document.getElementById("cart-count");
+    if (badge) badge.textContent = count;
+  }
+
+  function renderCart() {
+    const table = document.getElementById("cart-items");
+    const items = getCartItems();
+    table.innerHTML = "";
+    let total = 0;
+
+    items.forEach((item, index) => {
+      const subtotal = item.price * item.qty;
+      total += subtotal;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>$${item.price.toFixed(2)}</td>
+        <td><input type="number" value="${item.qty}" min="1" class="quantity-input" data-index="${index}"></td>
+        <td class="subtotal">$${subtotal.toFixed(2)}</td>
+        <td><button class="btn remove-btn" data-index="${index}">Remove</button></td>
+      `;
+      table.appendChild(row);
+    });
+
+    document.getElementById("total-amount").innerText = `$${total.toFixed(2)}`;
+    updateCartBadge();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderCart();
+
+    document.getElementById("cart-items").addEventListener("input", (e) => {
+      if (e.target.classList.contains("quantity-input")) {
+        const index = parseInt(e.target.dataset.index);
+        const qty = parseInt(e.target.value);
+        const items = getCartItems();
+        items[index].qty = qty;
+        setCartItems(items);
+        renderCart();
+      }
+    });
+
+    document.getElementById("cart-items").addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-btn")) {
+        const index = parseInt(e.target.dataset.index);
+        const items = getCartItems();
+        items.splice(index, 1);
+        setCartItems(items);
+        renderCart();
+      }
+    });
+
+    // If not logged in, show alert
+    const loginPromptBtn = document.getElementById("loginPromptBtn");
+    if (loginPromptBtn) {
+      loginPromptBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("Please login before placing your order.");
+        window.location.href = "login.php";
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
